@@ -7,19 +7,30 @@
 # compatible open source license.
 
 from opensearchpy import OpenSearch
+import os
 
 # connect to OpenSearch
 
-host = 'localhost'
-port = 9200
-auth = ('admin', 'admin') # For testing only. Don't store credentials in code.
+host = os.getenv('HOST', default='44.218.44.148')
+port = int(os.getenv('PORT', 9200))
+auth = (
+    os.getenv('USERNAME_OPENSEARCH', 'developer_andres'), 
+    os.getenv('PASSWORD', 'BJ6c6F3g8NpVdm')
+)
+print("host: ", host, "port: ", port, "auth: ", auth)
+
 
 client = OpenSearch(
     hosts = [{'host': host, 'port': port}],
+    http_compress = True, # enables gzip compression for request bodies
     http_auth = auth,
+    # client_cert = client_cert_path,
+    # client_key = client_key_path,
     use_ssl = True,
     verify_certs = False,
-    ssl_show_warn = False
+    ssl_assert_hostname = False,
+    ssl_show_warn = False,
+    # ca_certs = ca_certs_path
 )
 
 info = client.info()

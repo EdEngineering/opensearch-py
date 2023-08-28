@@ -13,11 +13,11 @@ from opensearchpy import OpenSearch
 
 # connect to an instance of OpenSearch
 
-host = os.getenv('HOST', default='localhost')
+host = os.getenv('HOST', default='44.218.44.148')
 port = int(os.getenv('PORT', 9200))
 auth = (
-    os.getenv('USERNAME', 'admin'), 
-    os.getenv('PASSWORD', 'admin')
+    os.getenv('USERNAME_OPENSEARCH', 'developer_andres'), 
+    os.getenv('PASSWORD', 'BJ6c6F3g8NpVdm')
 )
 
 client = OpenSearch(
@@ -29,7 +29,7 @@ client = OpenSearch(
 )
 
 # check whether an index exists
-index_name = "my-index"
+index_name = "edev-test-index"
 
 if not client.indices.exists(index_name):
 
@@ -60,5 +60,5 @@ else:
     print(f"Bulk-inserted {len(rc['items'])} items.")
 
 # delete index
-client.indices.delete(index=index_name)
+# client.indices.delete(index=index_name)
 
